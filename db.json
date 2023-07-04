@@ -1,0 +1,57 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Usuário Fictício",
+      "email": "user@example.com",
+      "password": "senha123",
+      "lists": []
+    },
+    {
+      "email": "user@mail.com",
+      "password": "$2a$10$rKP6QM.RGY.o0TMAFRBiwOT37Ik42HHlK.IN15cFEn8HC2r09co5u",
+      "id": 2
+    },
+    {
+      "email": "user1@mail.com",
+      "password": "$2a$10$1lk1P00zhzKXZfMVNMj.Pej8TCIFA8zVoSukfcBbDOARXDHb1tf62",
+      "name": "THIAGO",
+      "lists": [],
+      "id": 3
+    }
+  ],
+  "lists": [
+    {
+      "id": 1,
+      "title": "Compras",
+      "tasks": [
+        {
+          "id": 1,
+          "title": "Leite",
+          "completed": false
+        },
+        {
+          "id": 2,
+          "title": "Pão",
+          "completed": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Tarefas",
+      "tasks": [
+        {
+          "id": 1,
+          "title": "Lavar o carro",
+          "completed": true
+        },
+        {
+          "id": 2,
+          "title": "Pagar contas",
+          "completed": false
+        }
+      ]
+    }
+  ]
+}
