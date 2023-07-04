@@ -6,6 +6,7 @@ const TodoListScreen = () => {
   const [lists, setLists] = useState([]);
   const [newListTitle, setNewListTitle] = useState('');
   const [editingListId, setEditingListId] = useState(null);
+  const [tasks, setTasks] = useState([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   useEffect(() => {
@@ -14,7 +15,7 @@ const TodoListScreen = () => {
 
   const fetchLists = async () => {
     try {
-      const response = await api.get('/lists?tasks');
+      const response = await api.get('/lists', { params: { _embed: 'tasks' } });
       setLists(response.data);
     } catch (error) {
       console.error(error);
@@ -51,6 +52,20 @@ const TodoListScreen = () => {
     }
   };
 
+  const handleEdit = (id, title) => {
+    setNewListTitle(title);
+    setEditingListId(id);
+  };
+
+  const fetchTasks = async (listId) => {
+    try {
+      const response = await api.get(`/tasks?listId=${listId}`);
+      setTasks(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const createTask = async (listId) => {
     try {
       const response = await api.post('/tasks', {
@@ -58,7 +73,7 @@ const TodoListScreen = () => {
         title: newTaskTitle,
       });
       setNewTaskTitle('');
-      fetchLists();
+      setTasks([...tasks, response.data]);
     } catch (error) {
       console.error(error);
     }
@@ -67,15 +82,10 @@ const TodoListScreen = () => {
   const deleteTask = async (taskId) => {
     try {
       await api.delete(`/tasks/${taskId}`);
-      fetchLists();
+      setTasks(tasks.filter((task) => task.id !== taskId));
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const handleEdit = (id, title) => {
-    setNewListTitle(title);
-    setEditingListId(id);
   };
 
   return (
@@ -98,7 +108,7 @@ const TodoListScreen = () => {
             </View>
           </View>
           <View style={styles.taskContainer}>
-            {list.tasks.map((task) => (
+            {tasks.map((task) => (
               <View key={task.id} style={styles.taskItem}>
                 <Text>{task.title}</Text>
                 <Button
